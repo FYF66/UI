@@ -7,9 +7,10 @@ import PyQt5.QtWidgets as qw
 from mainwindow import Ui_mainwindow
 from PyQt5.QtCore import QTimer
 
-class myMainWindow(qw.QMainWindow,Ui_mainwindow):
+
+class myMainWindow(qw.QMainWindow, Ui_mainwindow):
     def __init__(self):
-        super(myMainWindow,self).__init__()
+        super(myMainWindow, self).__init__()
         self.setupUi(self)
         self.setWindowTitle('串口调试')
         self.ser = serial.Serial()
@@ -21,21 +22,21 @@ class myMainWindow(qw.QMainWindow,Ui_mainwindow):
         self.sendTxt.setText(str(self.data_num_send))
 
     def init(self):
-        #绑定信号与槽
-        #串口检测按钮
+        # 绑定信号与槽
+        # 串口检测按钮
         self.comTest.clicked.connect(self.comTest_cb)
-        #串口信息显示
+        # 串口信息显示
         self.comboBox_com.currentIndexChanged.connect(self.comboBox_com_cb)
-        #打开串口
+        # 打开串口
         self.openbotton.clicked.connect(self.openbotton_cb)
-        #关闭串口
+        # 关闭串口
         self.closebotton.clicked.connect(self.port_close)
         # 发送数据按钮
         self.sendbotton.clicked.connect(self.data_send)
-        #更改波特率
+        # 更改波特率
         self.comboBox_baud.currentIndexChanged.connect(self.comboBox_baud_cb)
 
-        #清空接收按钮
+        # 清空接收按钮
         self.qingkong.clicked.connect(self.qingkong_cb)
 
         # 定时发送数据
@@ -47,7 +48,7 @@ class myMainWindow(qw.QMainWindow,Ui_mainwindow):
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.data_receive)
 
-    #串口检测按钮
+    # 串口检测按钮
     def comTest_cb(self):
         self.comboBox_com.clear()
         # 检测所有存在的串口，将信息存储在字典中
@@ -64,7 +65,7 @@ class myMainWindow(qw.QMainWindow,Ui_mainwindow):
     def comboBox_com_cb(self):
         com = self.comboBox_com.currentText()
 
-    #打开串口按钮
+    # 打开串口按钮
     def openbotton_cb(self):
         self.ser.port = self.comboBox_com.currentText()
         self.ser.baudrate = int(self.comboBox_baud.currentText())
@@ -136,11 +137,12 @@ class myMainWindow(qw.QMainWindow,Ui_mainwindow):
 
                 num = self.ser.write(input_s)
                 self.data_num_send += str(num)
-                #self.lineEdit_2.setText(str(self.data_num_send))
+                # self.lineEdit_2.setText(str(self.data_num_send))
         else:
             qw.QMessageBox.information(self, '提示', '串口未打开')
 
         # 接收数据
+
     def data_receive(self):
         try:
             num = self.ser.inWaiting()
